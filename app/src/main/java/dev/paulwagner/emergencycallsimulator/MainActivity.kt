@@ -1,5 +1,7 @@
 package dev.paulwagner.emergencycallsimulator
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -73,5 +75,17 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    fun makePhoneCall(number: String) : Boolean {
+        return try {
+            val intent = Intent(Intent.ACTION_CALL)
+            intent.data = Uri.parse("tel:$number")
+            startActivity(intent)
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
     }
 }
